@@ -230,6 +230,30 @@ export async function runSystemDiagnostics(): Promise<SystemDiagnosticSnapshot> 
     } catch (error) {
       writeDiagnosticLog("error", "push-diagnostic", "Falha ao consultar Service Workers", error);
     }
+
+    // ✅ A varredura acima é rápida mas "otimista" — se o Service Worker
+    // ainda estiver ativando (ex: logo após reload), pode não aparecer em
+    // getRegistrations() a tempo, gerando um falso-negativo (subscription
+    // existe de verdade, mas o diagnóstico reporta 0). Import dinâmico evita
+    // dependência circular com push.ts (que já importa daqui).
+    if (push.subscriptions === 0) {
+      try {
+        const { findExistingPushSubscription } = await import("@/lib/push");
+        const fallbackSubscription = await findExistingPushSubscription();
+        if (fallbackSubscription) {
+          writeDiagnosticLog(
+            "info",
+            "push-diagnostic",
+            "Varredura rápida não encontrou subscription, mas a busca com espera (fallback) encontrou — SW provavelmente ainda estava ativando",
+          );
+          push.subscriptions = 1;
+          push.rawEndpoint = fallbackSubscription.endpoint;
+          push.endpoints.push(fallbackSubscription.endpoint.replace(/(.{28}).+(.{12})$/, "$1…$2"));
+        }
+      } catch (error) {
+        writeDiagnosticLog("warn", "push-diagnostic", "Fallback de busca de subscription falhou", error);
+      }
+    }
   }
 
   if ("caches" in window) {
