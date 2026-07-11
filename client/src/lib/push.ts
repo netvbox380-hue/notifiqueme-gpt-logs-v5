@@ -209,7 +209,7 @@ export async function unsubscribePush(): Promise<boolean> {
   return unsubscribed;
 }
 
-async function findExistingPushSubscription(): Promise<PushSubscription | null> {
+export async function findExistingPushSubscription(): Promise<PushSubscription | null> {
   if (!hasBrowserEnvironment() || !("serviceWorker" in navigator)) return null;
 
   // O Android/TWA pode manter mais de um registration durante a troca de
