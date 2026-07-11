@@ -1,0 +1,130 @@
+envVarGroups:
+  - name: notifique-me-shared
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: APP_ID
+        value: notifique-me
+      - key: SESSION_COOKIE_NAME
+        value: app_session_id
+      - key: OWNER_OPEN_ID
+        sync: false
+      - key: OWNER_PASSWORD
+        sync: false
+      - key: APP_URL
+        sync: false
+      - key: COOKIE_SECRET
+        generateValue: true
+      - key: JWT_SECRET
+        generateValue: true
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: CRON_SECRET
+        generateValue: true
+      - key: VAPID_PUBLIC_KEY
+        sync: false
+      - key: VAPID_PRIVATE_KEY
+        sync: false
+      - key: VAPID_SUBJECT
+        sync: false
+      - key: OAUTH_SERVER_URL
+        sync: false
+      - key: VITE_OAUTH_PORTAL_URL
+        sync: false
+      - key: VITE_APP_ID
+        value: notifique-me
+      - key: BUILT_IN_FORGE_API_URL
+        sync: false
+      - key: BUILT_IN_FORGE_API_KEY
+        sync: false
+      - key: MY_AWS_ACCESS_KEY_ID
+        sync: false
+      - key: MY_AWS_SECRET_ACCESS_KEY
+        sync: false
+      - key: MY_AWS_REGION
+        sync: false
+      - key: MY_AWS_BUCKET
+        sync: false
+      - key: MY_AWS_S3_ENDPOINT
+        sync: false
+      - key: CLEANUP_RETENTION_DAYS
+        value: "30"
+      - key: CLEANUP_BATCH_SIZE
+        value: "2000"
+      - key: CLEANUP_MAX_BATCHES
+        value: "5"
+
+services:
+  - type: web
+    name: notifique-me-web
+    runtime: node
+    plan: starter
+    region: oregon
+    buildCommand: npm ci && npm run build
+    startCommand: npm run start:web
+    healthCheckPath: /healthz
+    autoDeployTrigger: commit
+    envVars:
+      - fromGroup: notifique-me-shared
+      - key: DATABASE_URL
+        fromDatabase:
+          name: notifique-me-db
+          property: connectionString
+      - key: UPLOADS_DIR
+        value: /var/data/notifique-me/uploads
+    disk:
+      name: uploads
+      mountPath: /var/data/notifique-me
+      sizeGB: 10
+
+  - type: worker
+    name: notifique-me-queue
+    runtime: node
+    plan: starter
+    region: oregon
+    buildCommand: npm ci
+    startCommand: npm run render:queue
+    autoDeployTrigger: commit
+    envVars:
+      - fromGroup: notifique-me-shared
+      - key: DATABASE_URL
+        fromDatabase:
+          name: notifique-me-db
+          property: connectionString
+
+  - type: cron
+    name: notifique-me-schedules
+    runtime: node
+    plan: starter
+    region: oregon
+    schedule: "*/1 * * * *"
+    buildCommand: npm ci
+    startCommand: npm run render:schedules
+    envVars:
+      - fromGroup: notifique-me-shared
+      - key: DATABASE_URL
+        fromDatabase:
+          name: notifique-me-db
+          property: connectionString
+
+  - type: cron
+    name: notifique-me-cleanup
+    runtime: node
+    plan: starter
+    region: oregon
+    schedule: "0 4 * * 0"
+    buildCommand: npm ci
+    startCommand: npm run render:cleanup
+    envVars:
+      - fromGroup: notifique-me-shared
+      - key: DATABASE_URL
+        fromDatabase:
+          name: notifique-me-db
+          property: connectionString
+
+databases:
+  - name: notifique-me-db
+    plan: starter
+    region: oregon
+    databaseName: notifique_me
+    user: notifique_admin

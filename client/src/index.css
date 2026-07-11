@@ -1,0 +1,211 @@
+@import "./tailwind.css";
+
+/* Brutalismo Digital Theme - Neo-Noir */
+:root {
+  /* Core Colors - Absolute Black Base */
+  --background: oklch(0 0 0); /* Pure black #000 */
+  --foreground: oklch(1 0 0); /* Pure white #fff */
+
+  /* Card Surfaces - Dark Gray Layers */
+  --card: oklch(0.15 0 0); /* #1a1a1a */
+  --card-foreground: oklch(1 0 0);
+
+  /* Popover */
+  --popover: oklch(0.1 0 0); /* #111 */
+  --popover-foreground: oklch(1 0 0);
+
+  /* Primary Action - Vibrant Red */
+  --primary: oklch(0.55 0.22 25); /* #FF3A2D */
+  --primary-foreground: oklch(1 0 0);
+
+  /* Secondary - Darker Gray */
+  --secondary: oklch(0.2 0 0); /* #222 */
+  --secondary-foreground: oklch(0.85 0 0);
+
+  /* Muted Text */
+  --muted: oklch(0.25 0 0);
+  --muted-foreground: oklch(0.65 0 0); /* #a0a0a0 */
+
+  /* Accent - Same as Primary */
+  --accent: oklch(0.55 0.22 25);
+  --accent-foreground: oklch(1 0 0);
+
+  /* Destructive */
+  --destructive: oklch(0.55 0.22 25);
+  --destructive-foreground: oklch(1 0 0);
+
+  /* Borders - Subtle Gray */
+  --border: oklch(0.2 0 0); /* #222 */
+  --input: oklch(0.2 0 0);
+  --ring: oklch(0.55 0.22 25);
+
+  /* Charts */
+  --chart-1: oklch(0.55 0.22 25); /* Red */
+  --chart-2: oklch(0.7 0.15 145); /* Green neon #00ff41 */
+  --chart-3: oklch(0.85 0.15 100); /* Yellow #ffd700 */
+  --chart-4: oklch(0.65 0.2 280); /* Cyan */
+  --chart-5: oklch(0.5 0 0); /* Gray */
+
+  /* Sidebar */
+  --sidebar: oklch(0.05 0 0); /* Darker than background */
+  --sidebar-foreground: oklch(1 0 0);
+  --sidebar-primary: oklch(0.55 0.22 25);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.15 0 0);
+  --sidebar-accent-foreground: oklch(1 0 0);
+  --sidebar-border: oklch(0.2 0 0);
+  --sidebar-ring: oklch(0.55 0.22 25);
+
+  /* Zero Radius - Sharp Edges */
+  --radius: 0px;
+}
+
+* {
+  border-color: var(--border);
+  outline-color: color-mix(in oklch, var(--ring), transparent 50%);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* Brutalist Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+/* Technical Data Typography */
+.mono {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+button:not(:disabled),
+[role="button"]:not([aria-disabled="true"]),
+[type="button"]:not(:disabled),
+[type="submit"]:not(:disabled),
+[type="reset"]:not(:disabled),
+a[href],
+select:not(:disabled),
+input[type="checkbox"]:not(:disabled),
+input[type="radio"]:not(:disabled) {
+  cursor: pointer;
+}
+
+.container {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.flex {
+  min-height: 0;
+  min-width: 0;
+}
+
+@media (min-width: 640px) {
+  .container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+    max-width: 1280px;
+  }
+}
+
+/* Brutalist Card with Hard Shadow */
+.brutalist-card {
+  background-color: var(--card);
+  border: 2px solid var(--border);
+  box-shadow: 4px 4px 0 0 oklch(0.2 0 0);
+}
+
+/* Pulsing Border Animation */
+@keyframes pulse-border {
+  0%, 100% {
+    border-color: oklch(0.55 0.22 25);
+    box-shadow: 0 0 0 0 oklch(0.55 0.22 25 / 0.7);
+  }
+  50% {
+    border-color: oklch(0.65 0.22 25);
+    box-shadow: 0 0 0 4px oklch(0.55 0.22 25 / 0);
+  }
+}
+
+.pulse-border {
+  animation: pulse-border 2s ease-in-out infinite;
+}
+
+/* Status Dots with Glow */
+.status-dot {
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 9999px;
+}
+
+.status-dot.active {
+  background: oklch(0.7 0.15 145);
+  box-shadow: 0 0 8px oklch(0.7 0.15 145 / 0.6);
+}
+
+.status-dot.inactive {
+  background: oklch(0.5 0 0);
+}
+
+.status-dot.blocked {
+  background: oklch(0.55 0.22 25);
+  box-shadow: 0 0 8px oklch(0.55 0.22 25 / 0.6);
+}
+
+/* Custom Scrollbar - Brutalist Style */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: oklch(0.1 0 0);
+}
+
+::-webkit-scrollbar-thumb {
+  background: oklch(0.3 0 0);
+  border: 1px solid oklch(0.2 0 0);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: oklch(0.55 0.22 25);
+}
+
+/* 🔒 Mobile safety: evita scroll horizontal e corte de layout */
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Garante que o root do app não estoure no mobile */
+#root {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Evita overflow interno em layouts flex complexos */
+main,
+section,
+aside {
+  min-width: 0;
+}

@@ -1,0 +1,41 @@
+[build]
+  command = "npm run build:client"
+  publish = "dist/public"
+
+# Local dev (Netlify Dev)
+# - Serve o front via Vite
+# - Mantém /api/* apontando para Functions (igual produção)
+[dev]
+  command = "npm run dev:client"
+  port = 8888
+  targetPort = 5173
+  framework = "#custom"
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
+# API -> Function
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200
+  force = true
+
+# SPA fallback
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# ✅ PWA: garanta que o Service Worker sempre atualize (evita cache velho quebrando instalação/offline)
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "no-cache"
+    Service-Worker-Allowed = "/"
+
+[[headers]]
+  for = "/manifest.webmanifest"
+  [headers.values]
+    Cache-Control = "no-cache"

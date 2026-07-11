@@ -1,0 +1,640 @@
+[Auth] Usuário admin@notifique.me não encontrado. Criando localmente...
+[Auth] Não foi possível sincronizar com OAuth (isso é normal em ambiente local): AxiosError: getaddrinfo ENOTFOUND oauth.manus.im
+    at AxiosError.from (file:///C:/Users/fabio/Downloads/notifique-me-admin-40/node_modules/axios/lib/core/AxiosError.js:96:14)
+    at RedirectableRequest.handleRequestError (file:///C:/Users/fabio/Downloads/notifique-me-admin-40/node_modules/axios/lib/adapters/http.js:817:25)
+    at RedirectableRequest.emit (node:events:520:35)
+    at eventHandlers.<computed> (C:\Users\fabio\Downloads\notifique-me-admin-40\node_modules\follow-redirects\index.js:49:24)
+    at ClientRequest.emit (node:events:508:28)
+    at emitErrorEvent (node:_http_client:108:11)
+    at TLSSocket.socketErrorListener (node:_http_client:575:5)
+    at TLSSocket.emit (node:events:508:28)
+    at emitErrorNT (node:internal/streams/destroy:170:8)
+    at emitErrorCloseNT (node:internal/streams/destroy:129:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:89:21)
+    at Axios.request (file:///C:/Users/fabio/Downloads/notifique-me-admin-40/node_modules/axios/lib/core/Axios.js:45:41)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async SDKServer.getUserInfoWithJwt (C:\Users\fabio\Downloads\notifique-me-admin-40\server\_core\sdk.ts:246:22)
+    at async SDKServer.authenticateRequest (C:\Users\fabio\Downloads\notifique-me-admin-40\server\_core\sdk.ts:284:22)
+    at async Object.createContext (C:\Users\fabio\Downloads\notifique-me-admin-40\server\_core\context.ts:17:12)
+    at async Object.createContext (C:\Users\fabio\Downloads\notifique-me-admin-40\node_modules\@trpc\server\src\adapters\node-http\nodeHTTPRequestHandler.ts:94:18)
+    at async Object.create (C:\Users\fabio\Downloads\notifique-me-admin-40\node_modules\@trpc\server\src\unstable-core-do-not-import\http\resolveResponse.ts:286:23)
+    at async resolveResponse (C:\Users\fabio\Downloads\notifique-me-admin-40\node_modules\@trpc\server\src\unstable-core-do-not-import\http\resolveResponse.ts:325:5)
+    at async <anonymous> (C:\Users\fabio\Downloads\notifique-me-admin-40\node_modules\@trpc\server\src\adapters\node-http\nodeHTTPRequestHandler.ts:100:26) {
+  hostname: 'oauth.manus.im',
+  syscall: 'getaddrinfo',
+  code: 'ENOTFOUND',
+  errno: -3008,
+  config: {
+    transitional: {
+      silentJSONParsing: true,
+      forcedJSONParsing: true,
+      clarifyTimeoutError: false
+    },
+    adapter: [ 'xhr', 'http', 'fetch' ],
+    transformRequest: [ [Function: transformRequest] ],
+    transformResponse: [ [Function: transformResponse] ],
+    timeout: 30000,
+    xsrfCookieName: 'XSRF-TOKEN',
+    xsrfHeaderName: 'X-XSRF-TOKEN',
+    maxContentLength: -1,
+    maxBodyLength: -1,
+    env: { FormData: [Function], Blob: [class Blob] },
+    validateStatus: [Function: validateStatus],
+    headers: Object [AxiosHeaders] {
+      Accept: 'application/json, text/plain, */*',
+      'Content-Type': 'application/json',
+      'User-Agent': 'axios/1.13.2',
+      'Content-Length': '247',
+      'Accept-Encoding': 'gzip, compress, deflate, br'
+    },
+    baseURL: 'https://oauth.manus.im',
+    method: 'post',
+    url: '/webdev.v1.WebDevAuthPublicService/GetUserInfoWithJwt',
+    data: '{"jwtToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJvcGVuSWQiOiJhZG1pbkBub3RpZmlxdWUubWUiLCJhcHBJZCI6ImFwcF9ub3RpZmlxdWVfbWUiLCJuYW1lIjoiYWRtaW4iLCJleHAiOjE4MDA0MDEwOTB9.phbuEYfy2gtRZ2z0l3DIT4pdjdGO8ltqrCyOLLohaLQ","projectId":"app_notifique_me"}',
+    allowAbsoluteUrls: true
+  },
+  request: <ref *1> Writable {
+    _events: {
+      close: undefined,
+      error: [Function: handleRequestError],
+      prefinish: undefined,
+      finish: undefined,
+      drain: undefined,
+      response: [Function: handleResponse],
+      socket: [Array],
+      timeout: undefined,
+      abort: undefined
+    },
+    _writableState: WritableState {
+      highWaterMark: 16384,
+      length: 0,
+      corked: 0,
+      onwrite: [Function: bound onwrite],
+      writelen: 0,
+      bufferedIndex: 0,
+      pendingcb: 0,
+      Symbol(kState): 17580812,
+      Symbol(kBufferedValue): null
+    },
+    _maxListeners: undefined,
+    _options: {
+      maxRedirects: 21,
+      maxBodyLength: Infinity,
+      protocol: 'https:',
+      path: '/webdev.v1.WebDevAuthPublicService/GetUserInfoWithJwt',
+      method: 'POST',
+      headers: [Object: null prototype],
+      agents: [Object],
+      auth: undefined,
+      family: undefined,
+      beforeRedirect: [Function: dispatchBeforeRedirect],
+      beforeRedirects: [Object],
+      http2Options: undefined,
+      hostname: 'oauth.manus.im',
+      port: '',
+      agent: undefined,
+      nativeProtocols: [Object],
+      pathname: '/webdev.v1.WebDevAuthPublicService/GetUserInfoWithJwt'
+    },
+    _ended: true,
+    _ending: true,
+    _redirectCount: 0,
+    _redirects: [],
+    _requestBodyLength: 247,
+    _requestBodyBuffers: [ [Object] ],
+    _eventsCount: 3,
+    _onNativeResponse: [Function (anonymous)],
+    _currentRequest: ClientRequest {
+      _events: [Object: null prototype],
+      _eventsCount: 7,
+      _maxListeners: undefined,
+      outputData: [],
+      outputSize: 0,
+      writable: true,
+      destroyed: false,
+      _last: false,
+      chunkedEncoding: false,
+      shouldKeepAlive: true,
+      maxRequestsOnConnectionReached: false,
+      _defaultKeepAlive: true,
+      useChunkedEncodingByDefault: true,
+      sendDate: false,
+      _removedConnection: false,
+      _removedContLen: false,
+      _removedTE: false,
+      strictContentLength: false,
+      _contentLength: 247,
+      _hasBody: true,
+      _trailer: '',
+      finished: true,
+      _headerSent: true,
+      _closed: false,
+      _header: 'POST /webdev.v1.WebDevAuthPublicService/GetUserInfoWithJwt HTTP/1.1\r\n' +
+        'Accept: application/json, text/plain, */*\r\n' +
+        'Content-Type: application/json\r\n' +
+        'User-Agent: axios/1.13.2\r\n' +
+        'Content-Length: 247\r\n' +
+        'Accept-Encoding: gzip, compress, deflate, br\r\n' +
+        'Host: oauth.manus.im\r\n' +
+        'Connection: keep-alive\r\n' +
+        '\r\n',
+      _keepAliveTimeout: 0,
+      _onPendingData: [Function: nop],
+      agent: [Agent],
+      socketPath: undefined,
+      method: 'POST',
+      maxHeaderSize: undefined,
+      insecureHTTPParser: undefined,
+      joinDuplicateHeaders: undefined,
+      path: '/webdev.v1.WebDevAuthPublicService/GetUserInfoWithJwt',
+      _ended: false,
+      res: null,
+      aborted: false,
+      timeoutCb: [Function: emitRequestTimeout],
+      upgradeOrConnect: false,
+      parser: null,
+      maxHeadersCount: null,
+      reusedSocket: false,
+      host: 'oauth.manus.im',
+      protocol: 'https:',
+      _redirectable: [Circular *1],
+      Symbol(shapeMode): false,
+      Symbol(kCapture): false,
+      Symbol(kBytesWritten): 0,
+      Symbol(kNeedDrain): false,
+      Symbol(corked): 0,
+      Symbol(kChunkedBuffer): [],
+      Symbol(kChunkedLength): 0,
+      Symbol(kSocket): [TLSSocket],
+      Symbol(kOutHeaders): [Object: null prototype],
+      Symbol(errored): null,
+      Symbol(kHighWaterMark): 16384,
+      Symbol(kRejectNonStandardBodyWrites): false,
+      Symbol(kUniqueHeaders): null
+    },
+    _currentUrl: 'https://oauth.manus.im/webdev.v1.WebDevAuthPublicService/GetUserInfoWithJwt',
+    _timeout: null,
+    Symbol(shapeMode): true,
+    Symbol(kCapture): false
+  },
+  [cause]: Error: getaddrinfo ENOTFOUND oauth.manus.im
+      at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'oauth.manus.im'
+  }
+}
+[Database] Failed to upsert user: DrizzleQueryError: Failed query: insert into "users" ("id", "tenantId", "openId", "name", "email", "loginMethod", "role", "createdAt", "updatedAt", "lastSignedIn") values (default, default, $1, $2, $3, $4, $5, default, default, $6) on conflict ("openId") do update set "name" = $7, "email" = $8, "loginMethod" = $9, "role" = $10, "lastSignedIn" = $11
+params: admin@notifique.me,admin,admin@notifique.me,,owner,2026-01-19T23:32:25.773Z,admin,admin@notifique.me,,owner,2026-01-19T23:32:25.773Z
+    at PostgresJsPreparedQuery.queryWithCache (C:\Users\fabio\Downloads\notifique-me-admin-40\node_modules\src\pg-core\session.ts:73:11)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async Module.upsertUser (C:\Users\fabio\Downloads\notifique-me-admin-40\server\db.ts:71:20)
+    at async SDKServer.authenticateRequest (C:\Users\fabio\Downloads\notifique-me-admin-40\server\_core\sdk.ts:300:9)
+    at async Object.createContext (C:\Users\fabio\Downloads\notifique-me-admin-40\server\_core\context.ts:17:12)
+    at async Object.createContext (C:\Users\fabio\Downloads\notifique-me-admin-40\node_modules\@trpc\server\src\adapters\node-http\nodeHTTPRequestHandler.ts:94:18)
+    at async Object.create (C:\Users\fabio\Downloads\notifique-me-admin-40\node_modules\@trpc\server\src\unstable-core-do-not-import\http\resolveResponse.ts:286:23)
+    at async resolveResponse (C:\Users\fabio\Downloads\notifique-me-admin-40\node_modules\@trpc\server\src\unstable-core-do-not-import\http\resolveResponse.ts:325:5)
+    at async <anonymous> (C:\Users\fabio\Downloads\notifique-me-admin-40\node_modules\@trpc\server\src\adapters\node-http\nodeHTTPRequestHandler.ts:100:26) {
+  query: 'insert into "users" ("id", "tenantId", "openId", "name", "email", "loginMethod", "role", "createdAt", "updatedAt", "lastSignedIn") values (default, default, $1, $2, $3, $4, $5, default, default, $6) on conflict ("openId") do update set "name" = $7, "email" = $8, "loginMethod" = $9, "role" = $10, "lastSignedIn" = $11',
+  params: [
+    'admin@notifique.me',
+    'admin',
+    'admin@notifique.me',
+    null,
+    'owner',
+    '2026-01-19T23:32:25.773Z',
+    'admin',
+    'admin@notifique.me',
+    null,
+    'owner',
+    '2026-01-19T23:32:25.773Z'
+  ],
+  cause: PostgresError: SSL/TLS required
+      at ErrorResponse (file:///C:/Users/fabio/Downloads/notifique-me-admin-40/node_modules/postgres/src/connection.js:817:22)
+      at handle (file:///C:/Users/fabio/Downloads/notifique-me-admin-40/node_modules/postgres/src/connection.js:489:6)
+      at Socket.data (file:///C:/Users/fabio/Downloads/notifique-me-admin-40/node_modules/postgres/src/connection.js:324:9)
+      at Socket.emit (node:events:508:28)
+      at addChunk (node:internal/streams/readable:559:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:510:3)
+      at Readable.push (node:internal/streams/readable:390:5)
+      at TCP.onStreamRead (node:internal/stream_base_commons:189:23) {
+    severity_local: 'FATAL',
+    code: '28000'
+  }
+}
+[Auth] Falha ao criar usuário: DrizzleQueryError: Failed query: insert into "users" ("id", "tenantId", "openId", "name", "email", "loginMethod", "role", "createdAt", "updatedAt", "lastSignedIn") values (default, default, $1, $2, $3, $4, $5, default, default, $6) on conflict ("openId") do update set "name" = $7, "email" = $8, "loginMethod" = $9, "role" = $10, "lastSignedIn" = $11
+params: admin@notifique.me,admin,admin@notifique.me,,owner,2026-01-19T23:32:25.773Z,admin,admin@notifique.me,,owner,2026-01-19T23:32:25.773Z
+    at PostgresJsPreparedQuery.queryWithCache (C:\Users\fabio\Downloads\notifique-me-admin-40\node_modules\src\pg-core\session.ts:73:11)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async Module.upsertUser (C:\Users\fabio\Downloads\notifique-me-admin-40\server\db.ts:71:20)
+    at async SDKServer.authenticateRequest (C:\Users\fabio\Downloads\notifique-me-admin-40\server\_core\sdk.ts:300:9)
+    at async Object.createContext (C:\Users\fabio\Downloads\notifique-me-admin-40\server\_core\context.ts:17:12)
+    at async Object.createContext (C:\Users\fabio\Downloads\notifique-me-admin-40\node_modules\@trpc\server\src\adapters\node-http\nodeHTTPRequestHandler.ts:94:18)
+    at async Object.create (C:\Users\fabio\Downloads\notifique-me-admin-40\node_modules\@trpc\server\src\unstable-core-do-not-import\http\resolveResponse.ts:286:23)
+    at async resolveResponse (C:\Users\fabio\Downloads\notifique-me-admin-40\node_modules\@trpc\server\src\unstable-core-do-not-import\http\resolveResponse.ts:325:5)
+    at async <anonymous> (C:\Users\fabio\Downloads\notifique-me-admin-40\node_modules\@trpc\server\src\adapters\node-http\nodeHTTPRequestHandler.ts:100:26) {
+  query: 'insert into "users" ("id", "tenantId", "openId", "name", "email", "loginMethod", "role", "createdAt", "updatedAt", "lastSignedIn") values (default, default, $1, $2, $3, $4, $5, default, default, $6) on conflict ("openId") do update set "name" = $7, "email" = $8, "loginMethod" = $9, "role" = $10, "lastSignedIn" = $11',
+  params: [
+    'admin@notifique.me',
+    'admin',
+    'admin@notifique.me',
+    null,
+    'owner',
+    '2026-01-19T23:32:25.773Z',
+    'admin',
+    'admin@notifique.me',
+    null,
+    'owner',
+    '2026-01-19T23:32:25.773Z'
+  ],
+  cause: PostgresError: SSL/TLS required
+      at ErrorResponse (file:///C:/Users/fabio/Downloads/notifique-me-admin-40/node_modules/postgres/src/connection.js:817:22)
+      at handle (file:///C:/Users/fabio/Downloads/notifique-me-admin-40/node_modules/postgres/src/connection.js:489:6)
+      at Socket.data (file:///C:/Users/fabio/Downloads/notifique-me-admin-40/node_modules/postgres/src/connection.js:324:9)
+      at Socket.emit (node:events:508:28)
+      at addChunk (node:internal/streams/readable:559:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:510:3)
+      at Readable.push (node:internal/streams/readable:390:5)
+      at TCP.onStreamRead (node:internal/stream_base_commons:189:23) {
+    severity_local: 'FATAL',
+    code: '28000'
+  }
+}
+[Auth] Usuário admin@notifique.me não encontrado. Criando localmente...
+[Auth] Não foi possível sincronizar com OAuth (isso é normal em ambiente local): AxiosError: getaddrinfo ENOTFOUND oauth.manus.im
+    at AxiosError.from (file:///C:/Users/fabio/Downloads/notifique-me-admin-40/node_modules/axios/lib/core/AxiosError.js:96:14)
+    at RedirectableRequest.handleRequestError (file:///C:/Users/fabio/Downloads/notifique-me-admin-40/node_modules/axios/lib/adapters/http.js:817:25)
+    at RedirectableRequest.emit (node:events:520:35)
+    at eventHandlers.<computed> (C:\Users\fabio\Downloads\notifique-me-admin-40\node_modules\follow-redirects\index.js:49:24)
+    at ClientRequest.emit (node:events:508:28)
+    at emitErrorEvent (node:_http_client:108:11)
+    at TLSSocket.socketErrorListener (node:_http_client:575:5)
+    at TLSSocket.emit (node:events:508:28)
+    at emitErrorNT (node:internal/streams/destroy:170:8)
+    at emitErrorCloseNT (node:internal/streams/destroy:129:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:89:21)
+    at Axios.request (file:///C:/Users/fabio/Downloads/notifique-me-admin-40/node_modules/axios/lib/core/Axios.js:45:41)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async SDKServer.getUserInfoWithJwt (C:\Users\fabio\Downloads\notifique-me-admin-40\server\_core\sdk.ts:246:22)
+    at async SDKServer.authenticateRequest (C:\Users\fabio\Downloads\notifique-me-admin-40\server\_core\sdk.ts:284:22)
+    at async Object.createContext (C:\Users\fabio\Downloads\notifique-me-admin-40\server\_core\context.ts:17:12)
+    at async Object.createContext (C:\Users\fabio\Downloads\notifique-me-admin-40\node_modules\@trpc\server\src\adapters\node-http\nodeHTTPRequestHandler.ts:94:18)
+    at async Object.create (C:\Users\fabio\Downloads\notifique-me-admin-40\node_modules\@trpc\server\src\unstable-core-do-not-import\http\resolveResponse.ts:286:23)
+    at async resolveResponse (C:\Users\fabio\Downloads\notifique-me-admin-40\node_modules\@trpc\server\src\unstable-core-do-not-import\http\resolveResponse.ts:325:5)
+    at async <anonymous> (C:\Users\fabio\Downloads\notifique-me-admin-40\node_modules\@trpc\server\src\adapters\node-http\nodeHTTPRequestHandler.ts:100:26) {
+  hostname: 'oauth.manus.im',
+  syscall: 'getaddrinfo',
+  code: 'ENOTFOUND',
+  errno: -3008,
+  config: {
+    transitional: {
+      silentJSONParsing: true,
+      forcedJSONParsing: true,
+      clarifyTimeoutError: false
+    },
+    adapter: [ 'xhr', 'http', 'fetch' ],
+    transformRequest: [ [Function: transformRequest] ],
+    transformResponse: [ [Function: transformResponse] ],
+    timeout: 30000,
+    xsrfCookieName: 'XSRF-TOKEN',
+    xsrfHeaderName: 'X-XSRF-TOKEN',
+    maxContentLength: -1,
+    maxBodyLength: -1,
+    env: { FormData: [Function], Blob: [class Blob] },
+    validateStatus: [Function: validateStatus],
+    headers: Object [AxiosHeaders] {
+      Accept: 'application/json, text/plain, */*',
+      'Content-Type': 'application/json',
+      'User-Agent': 'axios/1.13.2',
+      'Content-Length': '247',
+      'Accept-Encoding': 'gzip, compress, deflate, br'
+    },
+    baseURL: 'https://oauth.manus.im',
+    method: 'post',
+    url: '/webdev.v1.WebDevAuthPublicService/GetUserInfoWithJwt',
+    data: '{"jwtToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJvcGVuSWQiOiJhZG1pbkBub3RpZmlxdWUubWUiLCJhcHBJZCI6ImFwcF9ub3RpZmlxdWVfbWUiLCJuYW1lIjoiYWRtaW4iLCJleHAiOjE4MDA0MDEwOTB9.phbuEYfy2gtRZ2z0l3DIT4pdjdGO8ltqrCyOLLohaLQ","projectId":"app_notifique_me"}',
+    allowAbsoluteUrls: true
+  },
+  request: <ref *1> Writable {
+    _events: {
+      close: undefined,
+      error: [Function: handleRequestError],
+      prefinish: undefined,
+      finish: undefined,
+      drain: undefined,
+      response: [Function: handleResponse],
+      socket: [Array],
+      timeout: undefined,
+      abort: undefined
+    },
+    _writableState: WritableState {
+      highWaterMark: 16384,
+      length: 0,
+      corked: 0,
+      onwrite: [Function: bound onwrite],
+      writelen: 0,
+      bufferedIndex: 0,
+      pendingcb: 0,
+      Symbol(kState): 17580812,
+      Symbol(kBufferedValue): null
+    },
+    _maxListeners: undefined,
+    _options: {
+      maxRedirects: 21,
+      maxBodyLength: Infinity,
+      protocol: 'https:',
+      path: '/webdev.v1.WebDevAuthPublicService/GetUserInfoWithJwt',
+      method: 'POST',
+      headers: [Object: null prototype],
+      agents: [Object],
+      auth: undefined,
+      family: undefined,
+      beforeRedirect: [Function: dispatchBeforeRedirect],
+      beforeRedirects: [Object],
+      http2Options: undefined,
+      hostname: 'oauth.manus.im',
+      port: '',
+      agent: undefined,
+      nativeProtocols: [Object],
+      pathname: '/webdev.v1.WebDevAuthPublicService/GetUserInfoWithJwt'
+    },
+    _ended: true,
+    _ending: true,
+    _redirectCount: 0,
+    _redirects: [],
+    _requestBodyLength: 247,
+    _requestBodyBuffers: [ [Object] ],
+    _eventsCount: 3,
+    _onNativeResponse: [Function (anonymous)],
+    _currentRequest: ClientRequest {
+      _events: [Object: null prototype],
+      _eventsCount: 7,
+      _maxListeners: undefined,
+      outputData: [],
+      outputSize: 0,
+      writable: true,
+      destroyed: false,
+      _last: false,
+      chunkedEncoding: false,
+      shouldKeepAlive: true,
+      maxRequestsOnConnectionReached: false,
+      _defaultKeepAlive: true,
+      useChunkedEncodingByDefault: true,
+      sendDate: false,
+      _removedConnection: false,
+      _removedContLen: false,
+      _removedTE: false,
+      strictContentLength: false,
+      _contentLength: 247,
+      _hasBody: true,
+      _trailer: '',
+      finished: true,
+      _headerSent: true,
+      _closed: false,
+      _header: 'POST /webdev.v1.WebDevAuthPublicService/GetUserInfoWithJwt HTTP/1.1\r\n' +
+        'Accept: application/json, text/plain, */*\r\n' +
+        'Content-Type: application/json\r\n' +
+        'User-Agent: axios/1.13.2\r\n' +
+        'Content-Length: 247\r\n' +
+        'Accept-Encoding: gzip, compress, deflate, br\r\n' +
+        'Host: oauth.manus.im\r\n' +
+        'Connection: keep-alive\r\n' +
+        '\r\n',
+      _keepAliveTimeout: 0,
+      _onPendingData: [Function: nop],
+      agent: [Agent],
+      socketPath: undefined,
+      method: 'POST',
+      maxHeaderSize: undefined,
+      insecureHTTPParser: undefined,
+      joinDuplicateHeaders: undefined,
+      path: '/webdev.v1.WebDevAuthPublicService/GetUserInfoWithJwt',
+      _ended: false,
+      res: null,
+      aborted: false,
+      timeoutCb: [Function: emitRequestTimeout],
+      upgradeOrConnect: false,
+      parser: null,
+      maxHeadersCount: null,
+      reusedSocket: false,
+      host: 'oauth.manus.im',
+      protocol: 'https:',
+      _redirectable: [Circular *1],
+      Symbol(shapeMode): false,
+      Symbol(kCapture): false,
+      Symbol(kBytesWritten): 0,
+      Symbol(kNeedDrain): false,
+      Symbol(corked): 0,
+      Symbol(kChunkedBuffer): [],
+      Symbol(kChunkedLength): 0,
+      Symbol(kSocket): [TLSSocket],
+      Symbol(kOutHeaders): [Object: null prototype],
+      Symbol(errored): null,
+      Symbol(kHighWaterMark): 16384,
+      Symbol(kRejectNonStandardBodyWrites): false,
+      Symbol(kUniqueHeaders): null
+    },
+    _currentUrl: 'https://oauth.manus.im/webdev.v1.WebDevAuthPublicService/GetUserInfoWithJwt',
+    _timeout: null,
+    Symbol(shapeMode): true,
+    Symbol(kCapture): false
+  },
+  [cause]: Error: getaddrinfo ENOTFOUND oauth.manus.im
+      at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'oauth.manus.im'
+  }
+}
+[Database] Failed to upsert user: DrizzleQueryError: Failed query: insert into "users" ("id", "tenantId", "openId", "name", "email", "loginMethod", "role", "createdAt", "updatedAt", "lastSignedIn") values (default, default, $1, $2, $3, $4, $5, default, default, $6) on conflict ("openId") do update set "name" = $7, "email" = $8, "loginMethod" = $9, "role" = $10, "lastSignedIn" = $11
+params: admin@notifique.me,admin,admin@notifique.me,,owner,2026-01-19T23:32:26.478Z,admin,admin@notifique.me,,owner,2026-01-19T23:32:26.478Z
+    at PostgresJsPreparedQuery.queryWithCache (C:\Users\fabio\Downloads\notifique-me-admin-40\node_modules\src\pg-core\session.ts:73:11)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async Module.upsertUser (C:\Users\fabio\Downloads\notifique-me-admin-40\server\db.ts:71:20)
+    at async SDKServer.authenticateRequest (C:\Users\fabio\Downloads\notifique-me-admin-40\server\_core\sdk.ts:300:9)
+    at async Object.createContext (C:\Users\fabio\Downloads\notifique-me-admin-40\server\_core\context.ts:17:12)
+    at async Object.createContext (C:\Users\fabio\Downloads\notifique-me-admin-40\node_modules\@trpc\server\src\adapters\node-http\nodeHTTPRequestHandler.ts:94:18)
+    at async Object.create (C:\Users\fabio\Downloads\notifique-me-admin-40\node_modules\@trpc\server\src\unstable-core-do-not-import\http\resolveResponse.ts:286:23)
+    at async resolveResponse (C:\Users\fabio\Downloads\notifique-me-admin-40\node_modules\@trpc\server\src\unstable-core-do-not-import\http\resolveResponse.ts:325:5)
+    at async <anonymous> (C:\Users\fabio\Downloads\notifique-me-admin-40\node_modules\@trpc\server\src\adapters\node-http\nodeHTTPRequestHandler.ts:100:26) {
+  query: 'insert into "users" ("id", "tenantId", "openId", "name", "email", "loginMethod", "role", "createdAt", "updatedAt", "lastSignedIn") values (default, default, $1, $2, $3, $4, $5, default, default, $6) on conflict ("openId") do update set "name" = $7, "email" = $8, "loginMethod" = $9, "role" = $10, "lastSignedIn" = $11',
+  params: [
+    'admin@notifique.me',
+    'admin',
+    'admin@notifique.me',
+    null,
+    'owner',
+    '2026-01-19T23:32:26.478Z',
+    'admin',
+    'admin@notifique.me',
+    null,
+    'owner',
+    '2026-01-19T23:32:26.478Z'
+  ],
+  cause: Error: read ECONNRESET
+      at TCP.onStreamRead (node:internal/stream_base_commons:216:20) {
+    errno: -4077,
+    code: 'ECONNRESET',
+    syscall: 'read'
+  }
+}
+[Auth] Falha ao criar usuário: DrizzleQueryError: Failed query: insert into "users" ("id", "tenantId", "openId", "name", "email", "loginMethod", "role", "createdAt", "updatedAt", "lastSignedIn") values (default, default, $1, $2, $3, $4, $5, default, default, $6) on conflict ("openId") do update set "name" = $7, "email" = $8, "loginMethod" = $9, "role" = $10, "lastSignedIn" = $11
+params: admin@notifique.me,admin,admin@notifique.me,,owner,2026-01-19T23:32:26.478Z,admin,admin@notifique.me,,owner,2026-01-19T23:32:26.478Z
+    at PostgresJsPreparedQuery.queryWithCache (C:\Users\fabio\Downloads\notifique-me-admin-40\node_modules\src\pg-core\session.ts:73:11)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async Module.upsertUser (C:\Users\fabio\Downloads\notifique-me-admin-40\server\db.ts:71:20)
+    at async SDKServer.authenticateRequest (C:\Users\fabio\Downloads\notifique-me-admin-40\server\_core\sdk.ts:300:9)
+    at async Object.createContext (C:\Users\fabio\Downloads\notifique-me-admin-40\server\_core\context.ts:17:12)
+    at async Object.createContext (C:\Users\fabio\Downloads\notifique-me-admin-40\node_modules\@trpc\server\src\adapters\node-http\nodeHTTPRequestHandler.ts:94:18)
+    at async Object.create (C:\Users\fabio\Downloads\notifique-me-admin-40\node_modules\@trpc\server\src\unstable-core-do-not-import\http\resolveResponse.ts:286:23)
+    at async resolveResponse (C:\Users\fabio\Downloads\notifique-me-admin-40\node_modules\@trpc\server\src\unstable-core-do-not-import\http\resolveResponse.ts:325:5)
+    at async <anonymous> (C:\Users\fabio\Downloads\notifique-me-admin-40\node_modules\@trpc\server\src\adapters\node-http\nodeHTTPRequestHandler.ts:100:26) {
+  query: 'insert into "users" ("id", "tenantId", "openId", "name", "email", "loginMethod", "role", "createdAt", "updatedAt", "lastSignedIn") values (default, default, $1, $2, $3, $4, $5, default, default, $6) on conflict ("openId") do update set "name" = $7, "email" = $8, "loginMethod" = $9, "role" = $10, "lastSignedIn" = $11',
+  params: [
+    'admin@notifique.me',
+    'admin',
+    'admin@notifique.me',
+    null,
+    'owner',
+    '2026-01-19T23:32:26.478Z',
+    'admin',
+    'admin@notifique.me',
+    null,
+    'owner',
+    '2026-01-19T23:32:26.478Z'
+  ],
+  cause: Error: read ECONNRESET
+      at TCP.onStreamRead (node:internal/stream_base_commons:216:20) {
+    errno: -4077,
+    code: 'ECONNRESET',
+    syscall: 'read'
+  }
+}
+[Auth] Usuário admin@notifique.me não encontrado. Criando localmente...
+[Auth] Não foi possível sincronizar com OAuth (isso é normal em ambiente local): AxiosError: getaddrinfo ENOTFOUND oauth.manus.im
+    at AxiosError.from (file:///C:/Users/fabio/Downloads/notifique-me-admin-40/node_modules/axios/lib/core/AxiosError.js:96:14)
+    at RedirectableRequest.handleRequestError (file:///C:/Users/fabio/Downloads/notifique-me-admin-40/node_modules/axios/lib/adapters/http.js:817:25)
+    at RedirectableRequest.emit (node:events:520:35)
+    at eventHandlers.<computed> (C:\Users\fabio\Downloads\notifique-me-admin-40\node_modules\follow-redirects\index.js:49:24)
+    at ClientRequest.emit (node:events:508:28)
+    at emitErrorEvent (node:_http_client:108:11)
+    at TLSSocket.socketErrorListener (node:_http_client:575:5)
+    at TLSSocket.emit (node:events:508:28)
+    at emitErrorNT (node:internal/streams/destroy:170:8)
+    at emitErrorCloseNT (node:internal/streams/destroy:129:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:89:21)
+    at Axios.request (file:///C:/Users/fabio/Downloads/notifique-me-admin-40/node_modules/axios/lib/core/Axios.js:45:41)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async SDKServer.getUserInfoWithJwt (C:\Users\fabio\Downloads\notifique-me-admin-40\server\_core\sdk.ts:246:22)
+    at async SDKServer.authenticateRequest (C:\Users\fabio\Downloads\notifique-me-admin-40\server\_core\sdk.ts:284:22)
+    at async Object.createContext (C:\Users\fabio\Downloads\notifique-me-admin-40\server\_core\context.ts:17:12)
+    at async Object.createContext (C:\Users\fabio\Downloads\notifique-me-admin-40\node_modules\@trpc\server\src\adapters\node-http\nodeHTTPRequestHandler.ts:94:18)
+    at async Object.create (C:\Users\fabio\Downloads\notifique-me-admin-40\node_modules\@trpc\server\src\unstable-core-do-not-import\http\resolveResponse.ts:286:23)
+    at async resolveResponse (C:\Users\fabio\Downloads\notifique-me-admin-40\node_modules\@trpc\server\src\unstable-core-do-not-import\http\resolveResponse.ts:325:5)
+    at async <anonymous> (C:\Users\fabio\Downloads\notifique-me-admin-40\node_modules\@trpc\server\src\adapters\node-http\nodeHTTPRequestHandler.ts:100:26) {
+  hostname: 'oauth.manus.im',
+  syscall: 'getaddrinfo',
+  code: 'ENOTFOUND',
+  errno: -3008,
+  config: {
+    transitional: {
+      silentJSONParsing: true,
+      forcedJSONParsing: true,
+      clarifyTimeoutError: false
+    },
+    adapter: [ 'xhr', 'http', 'fetch' ],
+    transformRequest: [ [Function: transformRequest] ],
+    transformResponse: [ [Function: transformResponse] ],
+    timeout: 30000,
+    xsrfCookieName: 'XSRF-TOKEN',
+    xsrfHeaderName: 'X-XSRF-TOKEN',
+    maxContentLength: -1,
+    maxBodyLength: -1,
+    env: { FormData: [Function], Blob: [class Blob] },
+    validateStatus: [Function: validateStatus],
+    headers: Object [AxiosHeaders] {
+      Accept: 'application/json, text/plain, */*',
+      'Content-Type': 'application/json',
+      'User-Agent': 'axios/1.13.2',
+      'Content-Length': '247',
+      'Accept-Encoding': 'gzip, compress, deflate, br'
+    },
+    baseURL: 'https://oauth.manus.im',
+    method: 'post',
+    url: '/webdev.v1.WebDevAuthPublicService/GetUserInfoWithJwt',
+    data: '{"jwtToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJvcGVuSWQiOiJhZG1pbkBub3RpZmlxdWUubWUiLCJhcHBJZCI6ImFwcF9ub3RpZmlxdWVfbWUiLCJuYW1lIjoiYWRtaW4iLCJleHAiOjE4MDA0MDEwOTB9.phbuEYfy2gtRZ2z0l3DIT4pdjdGO8ltqrCyOLLohaLQ","projectId":"app_notifique_me"}',
+    allowAbsoluteUrls: true
+  },
+  request: <ref *1> Writable {
+    _events: {
+      close: undefined,
+      error: [Function: handleRequestError],
+      prefinish: undefined,
+      finish: undefined,
+      drain: undefined,
+      response: [Function: handleResponse],
+      socket: [Array],
+      timeout: undefined,
+      abort: undefined
+    },
+    _writableState: WritableState {
+      highWaterMark: 16384,
+      length: 0,
+      corked: 0,
+      onwrite: [Function: bound onwrite],
+      writelen: 0,
+      bufferedIndex: 0,
+      pendingcb: 0,
+      Symbol(kState): 17580812,
+      Symbol(kBufferedValue): null
+    },
+    _maxListeners: undefined,
+    _options: {
+      maxRedirects: 21,
+      maxBodyLength: Infinity,
+      protocol: 'https:',
+      path: '/webdev.v1.WebDevAuthPublicService/GetUserInfoWithJwt',
+      method: 'POST',
+      headers: [Object: null prototype],
+      agents: [Object],
+      auth: undefined,
+      family: undefined,
+      beforeRedirect: [Function: dispatchBeforeRedirect],
+      beforeRedirects: [Object],
+      http2Options: undefined,
+      hostname: 'oauth.manus.im',
+      port: '',
+      agent: undefined,
+      nativeProtocols: [Object],
+      pathname: '/webdev.v1.WebDevAuthPublicService/GetUserInfoWithJwt'
+    },
+    _ended: true,
+    _ending: true,
+    _redirectCount: 0,
+    _redirects: [],
+    _requestBodyLength: 247,
+    _requestBodyBuffers: [ [Object] ],
+    _eventsCount: 3,
+    _onNativeResponse: [Function (anonymous)],
+    _currentRequest: ClientRequest {
+      _events: [Object: null prototype],
+      _eventsCount: 7,
+      _maxListeners: undefined,
+      outputData: [],
+      outputSize: 0,
+      writable: true,
+      destroyed: false,
+      _last: false,
+      chunkedEncoding: false,
+      shouldKeepAlive: true,
+      maxRequestsOnConnectionReached: false,
+      _defaultKeepAlive: true,
+      useChunkedEncodingByDefault: true,
+      sendDate: false,
+      _removedConnection: false,
+      _removedContLen: false,
+      _removedTE: false,
+      strictContentLength: false,
+      _contentLe

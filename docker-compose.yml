@@ -1,0 +1,76 @@
+version: '3.8'
+
+services:
+  # Banco de Dados PostgreSQL
+  postgres:
+    image: postgres:16
+    container_name: notifique-me-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: notifique_me
+      POSTGRES_USER: notifique_admin
+      POSTGRES_PASSWORD: admin_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - notifique-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U notifique_admin -d notifique_me"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  # Aplicação Web
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: notifique-me-app
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      # ✅ Somente PostgreSQL (zero Firebase)
+      DATABASE_URL: postgresql://notifique_admin:admin_password@postgres:5432/notifique_me
+      JWT_SECRET: seu_jwt_secret_aqui_mude_em_producao
+      VITE_APP_ID: ${VITE_APP_ID}
+      OAUTH_SERVER_URL: ${OAUTH_SERVER_URL:-https://oauth.manus.im}
+      OWNER_OPEN_ID: ninfoboyn@gmail.com
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - notifique-network
+    volumes:
+      - app_uploads:/app/uploads
+
+  # Worker para Notificações Agendadas (Opcional)
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: notifique-me-worker
+    restart: unless-stopped
+    command: ["npm", "run", "worker"]
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgresql://notifique_admin:admin_password@postgres:5432/notifique_me
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - notifique-network
+
+networks:
+  notifique-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+    driver: local
+  app_uploads:
+    driver: local
