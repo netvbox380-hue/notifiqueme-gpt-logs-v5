@@ -1,5 +1,6 @@
 import { useSyncExternalStore } from "react";
 import { registerServiceWorker } from "@/lib/pwa-register";
+import { writeDiagnosticLog } from "@/lib/diagnostics";
 
 const PUSH_STATUS_EVENT = "notifique-me:push-status-changed";
 
@@ -40,6 +41,40 @@ function assertSecureContext(): void {
   }
 }
 
+// ✅ Ponto único de espera pelo Service Worker — NUNCA sem limite de tempo.
+// Esse era exatamente o bug: `ensureServiceWorker()` fazia
+// `await navigator.serviceWorker.ready` sem prazo, e se o SW nunca ativasse
+// de verdade (erro no sw.js, instalação travada, cenário raro de TWA), a
+// cadeia inteira (readPushStatus → refreshGlobalPushStatus → usePushStatus)
+// ficava pendurada pra sempre — a tela nunca saía de "Verificando
+// notificações…". Com o timeout, o pior caso é degradar pra um estado
+// conhecido (não trava), e o motivo fica registrado no log de diagnóstico.
+const SERVICE_WORKER_READY_TIMEOUT_MS = 6000;
+
+async function waitForServiceWorkerReady(
+  timeoutMs = SERVICE_WORKER_READY_TIMEOUT_MS,
+): Promise<ServiceWorkerRegistration | null> {
+  try {
+    const result = await Promise.race([
+      navigator.serviceWorker.ready,
+      new Promise<null>((resolve) => {
+        window.setTimeout(() => {
+          writeDiagnosticLog(
+            "warn",
+            "push-status",
+            `serviceWorker.ready não respondeu em ${timeoutMs}ms — seguindo sem travar a interface`,
+          );
+          resolve(null);
+        }, timeoutMs);
+      }),
+    ]);
+    return result;
+  } catch (error) {
+    writeDiagnosticLog("error", "push-status", "serviceWorker.ready rejeitou", error);
+    return null;
+  }
+}
+
 async function findServiceWorkerRegistration(): Promise<
   ServiceWorkerRegistration | undefined
 > {
@@ -63,11 +98,17 @@ async function ensureServiceWorker(): Promise<ServiceWorkerRegistration> {
   }
 
   if (!registration) {
+    writeDiagnosticLog("error", "push-status", "Nenhum Service Worker disponível para registrar push");
     throw new Error("Service Worker indisponível para push neste ambiente.");
   }
 
-  await navigator.serviceWorker.ready;
-  return registration;
+  // ✅ Corrigido: antes era `await navigator.serviceWorker.ready` sem prazo
+  // (a causa da trava em "Verificando notificações…"). Agora, se não ficar
+  // "ready" a tempo, seguimos com o registration que já temos em mãos —
+  // normalmente já é suficiente pra checar/criar uma subscription mesmo
+  // "installing"/"waiting" — em vez de travar a interface pra sempre.
+  const readyRegistration = await waitForServiceWorkerReady();
+  return readyRegistration ?? registration;
 }
 
 export function refreshPushStatus(): void {
@@ -108,10 +149,12 @@ export async function getOrCreatePushSubscription(
   publicKey: string,
 ): Promise<PushSubscription> {
   if (!supportsPush()) {
+    writeDiagnosticLog("warn", "push-status", "Tentativa de ativar push em navegador sem suporte");
     throw new Error("Push não suportado neste navegador");
   }
 
   if (Notification.permission === "denied") {
+    writeDiagnosticLog("warn", "push-status", "Ativação bloqueada: permissão negada pelo usuário/navegador");
     throw new Error(
       "Notificações bloqueadas. Libere nas permissões do navegador.",
     );
@@ -119,6 +162,7 @@ export async function getOrCreatePushSubscription(
 
   if (Notification.permission === "default") {
     const permission = await Notification.requestPermission();
+    writeDiagnosticLog("info", "push-status", `Permissão de notificação solicitada: ${permission}`);
     if (permission !== "granted") {
       notifyPushStatusChanged();
       throw new Error("Permissão de notificação não concedida.");
@@ -127,6 +171,7 @@ export async function getOrCreatePushSubscription(
 
   const existingSubscription = await findExistingPushSubscription();
   if (existingSubscription) {
+    writeDiagnosticLog("info", "push-status", "Subscription já existente reutilizada");
     notifyPushStatusChanged();
     return existingSubscription;
   }
@@ -134,6 +179,7 @@ export async function getOrCreatePushSubscription(
   const registration = await ensureServiceWorker();
 
   if (!publicKey.trim()) {
+    writeDiagnosticLog("error", "push-status", "VAPID public key ausente ao tentar assinar push");
     throw new Error("VAPID public key ausente");
   }
 
@@ -143,6 +189,7 @@ export async function getOrCreatePushSubscription(
       .buffer as ArrayBuffer,
   });
 
+  writeDiagnosticLog("info", "push-status", "Nova subscription de push criada com sucesso");
   notifyPushStatusChanged();
   return subscription;
 }
@@ -153,10 +200,11 @@ export async function unsubscribePush(): Promise<boolean> {
   const registration = await findServiceWorkerRegistration();
   if (!registration) return false;
 
-  await navigator.serviceWorker.ready;
+  await waitForServiceWorkerReady();
   const subscription = await registration.pushManager.getSubscription();
   const unsubscribed = subscription ? await subscription.unsubscribe() : false;
 
+  writeDiagnosticLog("info", "push-status", unsubscribed ? "Push cancelado pelo usuário" : "Nenhuma subscription ativa para cancelar");
   notifyPushStatusChanged();
   return unsubscribed;
 }
@@ -180,16 +228,15 @@ async function findExistingPushSubscription(): Promise<PushSubscription | null> 
   }
 
   // Em uma primeira carga pode não haver item em getRegistrations() ainda,
-  // embora o registro esteja ficando pronto. Usa ready como última tentativa.
+  // embora o registro esteja ficando pronto. Usa o mesmo helper com prazo
+  // como última tentativa (nunca espera pra sempre).
+  const readyRegistration = await waitForServiceWorkerReady();
+  if (!readyRegistration) return null;
+
   try {
-    const readyRegistration = await Promise.race([
-      navigator.serviceWorker.ready,
-      new Promise<never>((_, reject) =>
-        window.setTimeout(() => reject(new Error("service-worker-ready-timeout")), 5000),
-      ),
-    ]);
     return await readyRegistration.pushManager.getSubscription();
-  } catch {
+  } catch (error) {
+    writeDiagnosticLog("warn", "push-status", "Falha ao consultar subscription após ready", error);
     return null;
   }
 }
@@ -231,7 +278,9 @@ function emitPushStatus(): void {
 
 function setPushStatusSnapshot(nextStatus: PushStatus): void {
   if (pushStatusSnapshot === nextStatus) return;
+  const previous = pushStatusSnapshot;
   pushStatusSnapshot = nextStatus;
+  writeDiagnosticLog("info", "push-status", `Status do push mudou: ${previous} → ${nextStatus}`);
   emitPushStatus();
 }
 
@@ -240,7 +289,25 @@ async function refreshGlobalPushStatus(): Promise<PushStatus> {
   if (pushStatusRefreshPromise) return pushStatusRefreshPromise;
 
   const requestId = ++pushStatusRequestId;
-  pushStatusRefreshPromise = readPushStatus()
+  // ✅ Segunda camada de segurança (redundante, de propósito): mesmo com os
+  // pontos internos já protegidos por timeout, essa é uma garantia por fora
+  // de que a checagem inteira NUNCA passa de 10s sem resolver pra algo — se
+  // isso disparar, é sinal de um novo `await` sem prazo escondido em algum
+  // lugar, e fica registrado como erro crítico no log em vez de travar a UI
+  // silenciosamente pra sempre.
+  pushStatusRefreshPromise = Promise.race([
+    readPushStatus(),
+    new Promise<PushStatus>((resolve) => {
+      window.setTimeout(() => {
+        writeDiagnosticLog(
+          "error",
+          "push-status",
+          "readPushStatus() não resolveu em 10s mesmo com os timeouts internos — degradando pra 'not-subscribed'. Isso indica um novo ponto sem prazo; vale investigar.",
+        );
+        resolve("not-subscribed");
+      }, 10_000);
+    }),
+  ])
     .then((nextStatus) => {
       // Uma resposta antiga nunca pode sobrescrever uma verificação mais nova.
       if (requestId === pushStatusRequestId) {
